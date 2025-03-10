@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: orange;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 5px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button.cancel {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Survey Form</h1>
+    <form action="#" method="post">
+        <!-- Required Fields -->
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="address">Street Address</label>
+        <input type="text" id="address" name="address" required>
+
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="state">State</label>
+        <input type="text" id="state" name="state" required>
+
+        <label for="zip">Zip Code</label>
+        <input type="number" id="zip" name="zip" required>
+
+        <label for="phone">Telephone Number</label>
+        <input type="number" id="phone" name="phone" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="date">Date of Survey</label>
+        <input type="date" id="date" name="date" required>
+
+        <!-- Checkboxes -->
+        <label>What did you like most about the campus?</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="likes" value="students"> Students</label>
+            <label><input type="checkbox" name="likes" value="location"> Location</label>
+            <label><input type="checkbox" name="likes" value="campus"> Campus</label>
+            <label><input type="checkbox" name="likes" value="atmosphere"> Atmosphere</label>
+            <label><input type="checkbox" name="likes" value="dorms"> Dorm Rooms</label>
+            <label><input type="checkbox" name="likes" value="sports"> Sports</label>
+        </div>
+
+        <!-- Radio Buttons -->
+        <label>How did you become interested in the university?</label>
+        <div class="radio-group">
+            <label><input type="radio" name="interest" value="friends" required> Friends</label>
+            <label><input type="radio" name="interest" value="television" required> Television</label>
+            <label><input type="radio" name="interest" value="internet" required> Internet</label>
+            <label><input type="radio" name="interest" value="other" required> Other</label>
+        </div>
+
+        <!-- Dropdown -->
+        <label for="recommend">Likelihood of recommending this school:</label>
+        <select id="recommend" name="recommend" required>
+            <option value="">Select an option</option>
+            <option value="very_likely">Very Likely</option>
+            <option value="likely">Likely</option>
+            <option value="unlikely">Unlikely</option>
+        </select>
+
+        <!-- Additional Text -->
+        <label for="raffle">Raffle (Enter at least 10 comma-separated numbers between 1 and 100)</label>
+        <input type="text" id="raffle" name="raffle" required>
+
+        <label for="comments">Additional Comments</label>
+        <textarea id="comments" name="comments" rows="4"></textarea>
+
+        <!-- Buttons -->
+        <button type="submit">Submit</button>
+        <button type="button" class="cancel" onclick="alert('Form cleared!');">Cancel</button>
+    </form>
+</body>
+</html>
