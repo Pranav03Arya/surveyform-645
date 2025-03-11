@@ -54,9 +54,6 @@ pipeline {
                                 # Configure kubectl to use GKE credentials
                                 gcloud container clusters get-credentials my-first-cluster-3 --region us-east1-b
 
-                                # Replace BUILD_ID in deployment file
-                                sed -i 's/\\${BUILD_ID}/${BUILD_ID}/g' deployment-definition.yaml
-
                                 # Apply Kubernetes deployment
                                 kubectl apply -f deployment-definition.yaml
                                 kubectl apply -f service-definition.yaml
