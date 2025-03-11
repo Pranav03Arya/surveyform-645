@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: survey-pod
-        image: pranav03arya/surveyform
+        image: pranav03arya/surveyform:latest
         ports:
         - containerPort: 80
