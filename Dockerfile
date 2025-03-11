@@ -1,12 +1,11 @@
-FROM ubuntu:latest
+FROM nginx:latest
 
-RUN apt-get update && \
-    apt-get install -y nginx && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+COPY student_survey_form.html /usr/share/nginx/html/index.html
 
-COPY student_survey_form.html /var/www/html/index.html
+COPY nginx_config /etc/nginx/conf.d/survey.conf
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+# Start Nginx (default CMD is already set in the base image)
+
+

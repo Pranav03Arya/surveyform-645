@@ -57,7 +57,7 @@ pipeline {
                                 # Apply Kubernetes deployment
                                 kubectl apply -f deployment-definition.yaml
                                 kubectl apply -f service-definition.yaml
-                                kubectl rollout restart deployment/survey-deployment
+                                kubectl rollout restart deployment survey-deployment
                             """
                         }
                     }
