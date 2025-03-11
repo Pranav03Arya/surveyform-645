@@ -1,0 +1,76 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_CREDENTIALS_ID = 'dockerhub-creds'  
+        KUBECONFIG_CREDENTIALS_ID = 'kubeconfig'
+        DOCKER_REPO = 'pranav03arya/surveyform'
+    }
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                script {
+                    // Clone the GitHub repository from the main branch
+                    git branch: 'main', url: 'https://github.com/Pranav03Arya/surveyform-645'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker image list"
+                    sh "docker build -t pranav03arya/surveyform:${BUILD_ID} ."
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD https://index.docker.io/v1/'
+                        sh "docker push ${DOCKER_REPO}:${BUILD_ID}"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'GCP_SERVICE_ACCOUNT_KEY', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        script {
+                            sh """
+                                echo 'Using Google service account credentials from: $GOOGLE_APPLICATION_CREDENTIALS'
+
+                                # Authenticate with Google Cloud
+                                gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+
+                                # Set the GCP project explicitly
+                                gcloud config set project endless-anagram-453318-q6
+
+                                # Configure kubectl to use GKE credentials
+                                gcloud container clusters get-credentials my-first-cluster-3 --region us-east1-b
+
+                                # Apply Kubernetes deployment
+                                kubectl apply -f deployment-definition.yaml
+                                kubectl apply -f service-definition.yaml
+                                kubectl rollout restart deployment/survey-deployment
+                            """
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up after pipeline runs
+            cleanWs()
+        }
+    }
+}
